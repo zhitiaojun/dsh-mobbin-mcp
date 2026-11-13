@@ -24,6 +24,7 @@ Mobbin MCP 只支持 **OAuth 2.0（无 API Key）**，官方客户端文档里�
 ```bash
 dsh plugin --profile web add github:zhitiaojun/dsh-mobbin-mcp
 ```
+
 本地开发时装当前目录：
 
 ```bash
