@@ -1,6 +1,6 @@
 {
   "name": "dsh-mobbin-mcp",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Mobbin MCP server for DeepSeek Harness — OAuth 2.0 (PKCE) login, Mobbin screen search and collection tools.",
   "type": "module",
   "main": "./lib/index.js",
@@ -37,11 +37,16 @@
   },
   "engines": {
     "node": ">=20",
-    "dsh": ">=0.2.0"
+    "dsh": ">=0.2.2-rc.1 <1.0.0"
+  },
+  "dsh": {
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    }
   },
   "scripts": {
     "check": "node --check lib/index.js && node --check lib/oauth.js && node --check lib/mobbin.js",
-    "test": "node --test test/",
+    "test": "node --test test/*.test.mjs",
     "login": "node scripts/login.mjs"
   },
   "dependencies": {
