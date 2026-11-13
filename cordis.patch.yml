@@ -1,0 +1,8 @@
+# Mount the Mobbin MCP bridge into a DeepSeek Harness profile.
+# Adjust `serverName` if you also run other Mobbin credentials side by side.
+- insert:
+    - id: mobbin-mcp
+      name: dsh-mobbin-mcp
+      config:
+        serverName: mobbin
+        url: https://api.mobbin.com/mcp
