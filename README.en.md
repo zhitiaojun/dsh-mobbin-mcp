@@ -25,12 +25,6 @@ From GitHub:
 dsh plugin --profile web add github:zhitiaojun/dsh-mobbin-mcp
 ```
 
-From npm:
-
-```bash
-dsh plugin --profile web add dsh-mobbin-mcp
-```
-
 From a local checkout:
 
 ```bash
