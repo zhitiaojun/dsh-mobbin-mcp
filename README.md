@@ -25,6 +25,12 @@ Mobbin MCP 只支持 **OAuth 2.0（无 API Key）**，官方客户端文档里�
 dsh plugin --profile web add github:zhitiaojun/dsh-mobbin-mcp
 ```
 
+从 npm 装：
+
+```bash
+dsh plugin --profile web add dsh-mobbin-mcp
+```
+
 本地开发时装当前目录：
 
 ```bash
@@ -33,18 +39,19 @@ dsh plugin --profile web add .
 
 ## 授权
 
-首次启动时插件还拿不到令牌，因此只会注册一个工具：
+首次启动时插件还拿不到令牌，因此只注册两个工具：
 
-`mcp__mobbin__authorize`
+- `mcp__mobbin__authorize` —— 启动授权流程，并立刻把授权链接返回给对话（不会卡住）；
+- `mcp__mobbin__authorize_status` —— 查询状态：`idle` / `running`（附链接）/ `failed`（附错误）/ `connected`。
 
-在对话里让模型调用它（或直接说「登录 Mobbin」），插件会：
+在对话里让模型调用 `mcp__mobbin__authorize`（或直接说「登录 Mobbin」），插件会：
 
-1. 起一个 loopback HTTP 服务器接收 OAuth 回调；
-2. 打开浏览器跳到 Mobbin 授权页（终端里同时打印完整 URL，浏览器没弹出时手动打开）；
-3. 用户在浏览器里登录并批准；
-4. 插件换取令牌、落盘，然后立刻把 Mobbin 的真实工具注册进来。
+1. 在后台起一个 loopback HTTP 服务器接 OAuth 回调，完成动态客户端注册与 PKCE；
+2. 返回 Mobbin 授权页 URL —— 打开链接、登录并批准（DSH 服务进程弹出的浏览器窗口不一定会出现在你的桌面上，复制链接手动打开最稳妥）；
+3. 批准后回调到达，插件换取令牌、落盘，并把 Mobbin 的真实工具注册进来；
+4. 用 `mcp__mobbin__authorize_status` 确认状态变成 `connected`。
 
-授权完成后 `mcp__mobbin__authorize` 会自动下线，之后每次 DSH 启动都直接从磁盘读令牌、静默连接。
+连接成功后两个授权工具一起下线，之后每次 DSH 启动都直接从磁盘读令牌、静默连接。
 
 想免去手动触发，可以让插件启动时自己弹浏览器：
 
