@@ -6,7 +6,7 @@ const tokenFile = process.argv[2] || defaultTokenFile()
 try {
   const stored = await authorize({
     serverUrl: 'https://api.mobbin.com/mcp',
-    scope: 'openid',
+    scope: 'openid offline_access',
     callbackPort: 14565,
     tokenFile,
     openBrowser: true,
